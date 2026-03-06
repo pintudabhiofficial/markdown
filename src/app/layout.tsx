@@ -36,7 +36,10 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        {/* Google Tag Manager */}
+        <script dangerouslySetInnerHTML={{ __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-TZDS82LL');` }} />
         <meta name="robots" content="INDEX,FOLLOW" />
+        <meta name="google-site-verification" content="PYgIke_rOI8fOGZuksFShJsiR_wcEGZo5qnR3doAFH8" />
         <link rel="canonical" href="https://markdownpreviewlive.com/" />
         <link rel="author" href="https://www.linkedin.com/in/pintudabhi/" />
         <link rel="publisher" href="https://www.linkedin.com/in/pintudabhi/" />
@@ -52,6 +55,14 @@ export default function RootLayout({
         className={`${inter.variable} ${firaCode.variable} font-sans antialiased`}
         suppressHydrationWarning
       >
+        {/* Google Tag Manager (noscript) */}
+        <noscript>
+          <iframe
+            src="https://www.googletagmanager.com/ns.html?id=GTM-TZDS82LL"
+            height="0" width="0"
+            style={{ display: "none", visibility: "hidden" }}
+          />
+        </noscript>
         <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
