@@ -12,70 +12,86 @@ interface FormatToolbarProps {
 }
 
 export function FormatToolbar({ onFormat, onLinePrefix, onInsertLine }: FormatToolbarProps) {
-  const btn =
-    "flex items-center justify-center w-7 h-7 rounded-md text-slate-400 dark:text-slate-500 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-500/10 transition-all duration-75 active:scale-[0.9]";
+  /* ── Per-group button styles: coloured at rest, brighter on hover ── */
+  const btn = (color: "indigo" | "violet" | "purple" | "emerald") => {
+    const map = {
+      indigo:  "text-indigo-500 dark:text-indigo-400 hover:text-white dark:hover:text-white hover:bg-indigo-500 dark:hover:bg-indigo-500",
+      violet:  "text-violet-500 dark:text-violet-400 hover:text-white dark:hover:text-white hover:bg-violet-500 dark:hover:bg-violet-500",
+      purple:  "text-purple-500 dark:text-purple-400 hover:text-white dark:hover:text-white hover:bg-purple-500 dark:hover:bg-purple-500",
+      emerald: "text-emerald-600 dark:text-emerald-400 hover:text-white dark:hover:text-white hover:bg-emerald-500 dark:hover:bg-emerald-500",
+    };
+    return `flex items-center justify-center w-8 h-8 rounded-md font-medium transition-all duration-100 active:scale-[0.88] ${map[color]}`;
+  };
 
-  const sep = <div className="w-px h-4 bg-slate-200 dark:bg-white/[0.06] mx-1 flex-shrink-0" />;
+  const sep = <div className="w-px h-5 bg-slate-300 dark:bg-white/[0.12] mx-1.5 flex-shrink-0" />;
 
   return (
-    <div className="flex items-center h-9 px-3 gap-0.5 border-b border-slate-200 dark:border-white/[0.06] bg-slate-50/80 dark:bg-slate-900/50 flex-shrink-0 overflow-x-auto backdrop-blur-sm">
+    <div className="flex items-center h-10 px-3 gap-0.5
+                    border-b border-slate-200 dark:border-white/[0.10]
+                    bg-slate-50 dark:bg-slate-800/80
+                    flex-shrink-0 overflow-x-auto scrollbar-none">
+
       {/* Label */}
       <div className="flex items-center gap-1.5 mr-2 flex-shrink-0">
-        <FileEdit size={12} className="text-indigo-400/60 dark:text-indigo-400/40" />
-        <span className="text-[11px] font-medium text-slate-400 dark:text-slate-500 uppercase tracking-wider">
+        <FileEdit size={13} className="text-indigo-500 dark:text-indigo-400" />
+        <span className="text-[11px] font-bold bg-gradient-to-r from-indigo-500 to-violet-500 dark:from-indigo-400 dark:to-violet-400 bg-clip-text text-transparent uppercase tracking-widest select-none">
           Editor
         </span>
       </div>
 
       {sep}
 
-      <button className={btn} title="Bold (Ctrl+B)" onClick={() => onFormat("**", "**", "bold text")}>
-        <Bold size={14} />
+      {/* ── Text formatting · indigo ── */}
+      <button className={btn("indigo")} title="Bold (Ctrl+B)" onClick={() => onFormat("**", "**", "bold text")}>
+        <Bold size={15} strokeWidth={2.5} />
       </button>
-      <button className={btn} title="Italic (Ctrl+I)" onClick={() => onFormat("*", "*", "italic text")}>
-        <Italic size={14} />
+      <button className={btn("indigo")} title="Italic (Ctrl+I)" onClick={() => onFormat("*", "*", "italic text")}>
+        <Italic size={15} strokeWidth={2.5} />
       </button>
-      <button className={btn} title="Strikethrough" onClick={() => onFormat("~~", "~~", "text")}>
-        <Strikethrough size={14} />
-      </button>
-
-      {sep}
-
-      <button className={btn} title="Heading 1" onClick={() => onLinePrefix("# ")}>
-        <Heading1 size={14} />
-      </button>
-      <button className={btn} title="Heading 2" onClick={() => onLinePrefix("## ")}>
-        <Heading2 size={14} />
-      </button>
-      <button className={btn} title="Heading 3" onClick={() => onLinePrefix("### ")}>
-        <Heading3 size={14} />
+      <button className={btn("indigo")} title="Strikethrough" onClick={() => onFormat("~~", "~~", "text")}>
+        <Strikethrough size={15} strokeWidth={2.5} />
       </button>
 
       {sep}
 
-      <button className={btn} title="Unordered List" onClick={() => onLinePrefix("- ")}>
-        <List size={14} />
+      {/* ── Headings · violet ── */}
+      <button className={btn("violet")} title="Heading 1" onClick={() => onLinePrefix("# ")}>
+        <Heading1 size={15} strokeWidth={2.5} />
       </button>
-      <button className={btn} title="Ordered List" onClick={() => onLinePrefix("1. ")}>
-        <ListOrdered size={14} />
+      <button className={btn("violet")} title="Heading 2" onClick={() => onLinePrefix("## ")}>
+        <Heading2 size={15} strokeWidth={2.5} />
       </button>
-      <button className={btn} title="Blockquote" onClick={() => onLinePrefix("> ")}>
-        <Quote size={14} />
+      <button className={btn("violet")} title="Heading 3" onClick={() => onLinePrefix("### ")}>
+        <Heading3 size={15} strokeWidth={2.5} />
       </button>
 
       {sep}
 
-      <button className={btn} title="Inline Code (Ctrl+E)" onClick={() => onFormat("`", "`", "code")}>
-        <Code size={14} />
+      {/* ── Lists & Quote · purple ── */}
+      <button className={btn("purple")} title="Unordered List" onClick={() => onLinePrefix("- ")}>
+        <List size={15} strokeWidth={2.5} />
       </button>
-      <button className={btn} title="Link (Ctrl+K)" onClick={() => onFormat("[", "](url)", "link text")}>
-        <Link size={14} />
+      <button className={btn("purple")} title="Ordered List" onClick={() => onLinePrefix("1. ")}>
+        <ListOrdered size={15} strokeWidth={2.5} />
       </button>
-      <button className={btn} title="Image" onClick={() => onFormat("![", "](url)", "alt text")}>
-        <Image size={14} />
+      <button className={btn("purple")} title="Blockquote" onClick={() => onLinePrefix("> ")}>
+        <Quote size={15} strokeWidth={2.5} />
       </button>
-      <button className={btn} title="Horizontal Rule" onClick={() => onInsertLine("\n---\n")}>
-        <Minus size={14} />
+
+      {sep}
+
+      {/* ── Code, links & misc · emerald ── */}
+      <button className={btn("emerald")} title="Inline Code (Ctrl+E)" onClick={() => onFormat("`", "`", "code")}>
+        <Code size={15} strokeWidth={2.5} />
+      </button>
+      <button className={btn("emerald")} title="Link (Ctrl+K)" onClick={() => onFormat("[", "](url)", "link text")}>
+        <Link size={15} strokeWidth={2.5} />
+      </button>
+      <button className={btn("emerald")} title="Image" onClick={() => onFormat("![", "](url)", "alt text")}>
+        <Image size={15} strokeWidth={2.5} />
+      </button>
+      <button className={btn("emerald")} title="Horizontal Rule" onClick={() => onInsertLine("\n---\n")}>
+        <Minus size={15} strokeWidth={2.5} />
       </button>
     </div>
   );
