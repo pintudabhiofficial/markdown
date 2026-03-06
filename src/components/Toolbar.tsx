@@ -4,7 +4,7 @@ import { useTheme } from "./ThemeProvider";
 import { useState } from "react";
 import {
   RotateCcw, Copy, Check, Moon, Sun, ArrowDownUp,
-  FileDown, FileUp, FileText, FileCode, FileType, Github,
+  FileDown, FileUp, FileText, FileCode, FileType, Linkedin,
 } from "lucide-react";
 
 interface ToolbarProps {
@@ -40,7 +40,7 @@ export function Toolbar({
   };
 
   return (
-    <header className="flex items-center h-12 px-3 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 border-b border-white/[0.06] flex-shrink-0 gap-1 select-none">
+    <header className="sticky top-0 z-50 flex items-center h-12 px-3 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 border-b border-white/[0.06] flex-shrink-0 gap-1 select-none">
 
       {/* Brand */}
       <div className="flex items-center gap-2.5 mr-2 flex-shrink-0">
@@ -95,15 +95,16 @@ export function Toolbar({
       {/* Spacer */}
       <div className="flex-1" />
 
-      {/* GitHub */}
+      {/* LinkedIn */}
       <a
-        href="https://github.com"
+        href="https://www.linkedin.com/in/pintudabhi/"
         target="_blank"
         rel="noopener noreferrer"
-        className="flex items-center justify-center w-8 h-8 rounded-lg text-slate-400 hover:text-white hover:bg-white/[0.08] transition-colors flex-shrink-0"
-        title="GitHub"
+        className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg bg-[#0A66C2] hover:bg-[#0958a8] text-white transition-colors flex-shrink-0"
+        title="LinkedIn - Pintu Dabhi"
       >
-        <Github size={16} />
+        <Linkedin size={16} />
+        <span className="hidden sm:inline text-[13px] font-medium whitespace-nowrap">Pintu Dabhi</span>
       </a>
     </header>
   );
