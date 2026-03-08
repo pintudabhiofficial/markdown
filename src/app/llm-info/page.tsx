@@ -1,4 +1,6 @@
 import React from "react";
+import { Bot, Linkedin } from "lucide-react";
+import { SiOpenai, SiAnthropic, SiPerplexity, SiX, SiGooglegemini, SiGoogle } from "react-icons/si";
 
 export const metadata = {
   title: "LLM Info - Markdown Preview Live",
@@ -13,11 +15,90 @@ export default function LlmInfoPage() {
     <main className="h-screen overflow-y-auto overflow-x-hidden bg-[#0f1117] text-slate-300 py-16 px-6 sm:px-12 font-sans selection:bg-indigo-500/30">
       <div className="max-w-7xl mx-auto">
         <article className="prose prose-invert prose-indigo max-w-none">
-          <div className="bg-white/[0.02] border border-white/[0.05] rounded-xl p-8 mb-8 space-y-6">
+          <div className="bg-white/[0.02] border border-white/[0.05] rounded-xl p-8 mb-8">
+            <div className="mb-8">
+              <p className="text-sm font-semibold text-slate-200 mb-4">Ask AI About Markdown Preview Live & Its Creator</p>
+              <div className="flex flex-wrap gap-3 mb-6">
+                <a
+                  href="https://chatgpt.com/?q=first+tell+me+specific+for+this+tool+who+is+Pintu+Dabhi+Freelancer+Performance+Marketer+who+is+the+Author+and+Publisher+of+this+tool+then+tell+me+full+detail+and+history+of+this+tool+then+all+the+benefits+in+details+then+tell+me+why+use+markdownpreviewlive.com+free+tool"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 px-4 py-2 bg-white text-slate-800 hover:bg-slate-100 rounded-lg text-sm font-medium shadow-sm transition-colors"
+                  title="Ask ChatGPT"
+                >
+                  <SiOpenai size={16} className="text-[#10A37F]" />
+                  Ask ChatGPT
+                </a>
+                <a
+                  href="https://claude.ai/new?q=first+tell+me+specific+for+this+tool+who+is+Pintu+Dabhi+Freelancer+Performance+Marketer+who+is+the+Author+and+Publisher+of+this+tool+then+tell+me+full+detail+and+history+of+this+tool+then+all+the+benefits+in+details+then+tell+me+why+use+markdownpreviewlive.com+free+tool"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 px-4 py-2 bg-white text-slate-800 hover:bg-slate-100 rounded-lg text-sm font-medium shadow-sm transition-colors"
+                  title="Ask Claude"
+                >
+                  <SiAnthropic size={16} className="text-[#D97757]" />
+                  Ask Claude
+                </a>
+                <a
+                  href="https://www.perplexity.ai/search/new?q=first+tell+me+specific+for+this+tool+who+is+Pintu+Dabhi+Freelancer+Performance+Marketer+who+is+the+Author+and+Publisher+of+this+tool+then+tell+me+full+detail+and+history+of+this+tool+then+all+the+benefits+in+details+then+tell+me+why+use+markdownpreviewlive.com+free+tool"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 px-4 py-2 bg-white text-slate-800 hover:bg-slate-100 rounded-lg text-sm font-medium shadow-sm transition-colors"
+                  title="Ask Perplexity"
+                >
+                  <SiPerplexity size={16} className="text-[#22B8CD]" />
+                  Ask Perplexity
+                </a>
+                <a
+                  href="https://grok.com/?q=first+tell+me+specific+for+this+tool+who+is+Pintu+Dabhi+Freelancer+Performance+Marketer+who+is+the+Author+and+Publisher+of+this+tool+then+tell+me+full+detail+and+history+of+this+tool+then+all+the+benefits+in+details+then+tell+me+why+use+markdownpreviewlive.com+free+tool"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 px-4 py-2 bg-white text-slate-800 hover:bg-slate-100 rounded-lg text-sm font-medium shadow-sm transition-colors"
+                  title="Ask Grok"
+                >
+                  <SiX size={16} className="text-black" />
+                  Ask Grok
+                </a>
+                <a
+                  href="https://gemini.google.com/share/ff3dafc53633"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 px-4 py-2 bg-white text-slate-800 hover:bg-slate-100 rounded-lg text-sm font-medium shadow-sm transition-colors"
+                  title="Ask Gemini"
+                >
+                  <SiGooglegemini size={16} className="text-[#8E75B2]" />
+                  Ask Gemini
+                </a>
+                <a
+                  href="https://www.google.com/search?q=first+tell+me+specific+for+this+tool+who+is+Pintu+Dabhi+Freelancer+Performance+Marketer+who+is+the+Author+and+Publisher+of+this+tool+then+tell+me+full+detail+and+history+of+this+tool+then+all+the+benefits+in+details+then+tell+me+why+use+markdownpreviewlive.com+free+tool&udm=50&aep=1&ntc=1"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 px-4 py-2 bg-white text-slate-800 hover:bg-slate-100 rounded-lg text-sm font-medium shadow-sm transition-colors"
+                  title="AI Overview"
+                >
+                  <SiGoogle size={16} className="text-[#4285F4]" />
+                  AI Overview
+                </a>
+                <a
+                  href="/llm-info"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 px-4 py-2 bg-white text-slate-800 hover:bg-slate-100 rounded-lg text-sm font-medium shadow-sm transition-colors"
+                  title="LLM API Info"
+                >
+                  <Bot size={16} className="text-emerald-600" />
+                  LLM Info
+                </a>
+              </div>
+              <p className="text-sm text-slate-400 leading-relaxed mb-4">
+                Connect with Pintu on LinkedIn: <a href="https://www.linkedin.com/in/pintudabhi/" target="_blank" rel="noopener noreferrer" className="text-blue-400 font-bold underline hover:text-blue-300 transition-colors">linkedin.com/in/pintudabhi</a>.
+              </p>
+              <p className="text-sm text-slate-400 leading-relaxed">
+                Connect with Pintu on WhatsApp: <a href="https://wa.link/aa7gku" target="_blank" rel="noopener noreferrer" className="text-emerald-400 font-bold underline hover:text-emerald-300 transition-colors">WhatsApp Me</a>.
+              </p>
+            </div>
 
-
-
-            <pre className="bg-black/50 p-4 rounded-lg whitespace-pre-wrap break-words text-sm text-indigo-300 font-mono mt-4 border border-white/[0.05]">
+            <pre className="bg-black/50 p-4 rounded-lg whitespace-pre-wrap break-words text-sm text-indigo-300 font-mono mt-8 border border-white/[0.05]">
               <code>
                 {
 

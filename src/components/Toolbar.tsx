@@ -6,6 +6,7 @@ import {
   RotateCcw, Copy, Check, Moon, Sun, ArrowDownUp,
   FileDown, FileUp, FileText, FileCode, FileType, Linkedin,
 } from "lucide-react";
+import { Tooltip } from "./Tooltip";
 
 interface ToolbarProps {
   onReset: () => void;
@@ -15,6 +16,7 @@ interface ToolbarProps {
   onMarkdownToWord: () => void;
   onPdfToMarkdown: () => void;
   onWordToMarkdown: () => void;
+  onTextToMarkdown: () => void;
   syncScroll: boolean;
   onSyncScrollToggle: () => void;
 }
@@ -27,6 +29,7 @@ export function Toolbar({
   onMarkdownToWord,
   onPdfToMarkdown,
   onWordToMarkdown,
+  onTextToMarkdown,
   syncScroll,
   onSyncScrollToggle,
 }: ToolbarProps) {
@@ -105,6 +108,7 @@ export function Toolbar({
         <div className="flex items-center gap-1 overflow-x-auto scrollbar-none min-w-0 col-start-2 row-start-2">
           <div className="w-px h-5 mx-1.5 flex-shrink-0 invisible" />
           <ToolBtn icon={<FileCode size={14} />} label="HTML → Markdown Converter (Import)" onClick={onHtmlToMarkdown} variant="import" />
+          <ToolBtn icon={<FileText size={14} />} label="Text → Markdown Converter (Import)" onClick={onTextToMarkdown} variant="import" />
           <ToolBtn icon={<FileDown size={14} />} label="PDF → Markdown Converter (Import)" onClick={onPdfToMarkdown} variant="import" />
           <ToolBtn icon={<FileUp size={14} />} label="Word → Markdown Converter (Import)" onClick={onWordToMarkdown} variant="import" />
         </div>
@@ -143,13 +147,15 @@ function ToolBtn({
           : "text-slate-300 hover:text-white hover:bg-white/[0.08]";
 
   return (
-    <button
-      onClick={onClick}
-      className={`flex items-center gap-1.5 px-2.5 py-1.5 text-[13px] rounded-lg transition-all duration-100 whitespace-nowrap active:scale-[0.97] ${variantClasses}`}
-    >
-      {icon}
-      <span className="hidden sm:inline">{label}</span>
-    </button>
+    <Tooltip content={label}>
+      <button
+        onClick={onClick}
+        className={`flex items-center gap-1.5 px-2.5 py-1.5 text-[13px] rounded-lg transition-all duration-100 whitespace-nowrap active:scale-[0.97] ${variantClasses}`}
+      >
+        {icon}
+        <span className="hidden sm:inline">{label}</span>
+      </button>
+    </Tooltip>
   );
 }
 
@@ -166,16 +172,18 @@ function ToggleBtn({
   onClick: () => void;
 }) {
   return (
-    <button
-      onClick={onClick}
-      className={`flex items-center gap-1.5 px-2.5 py-1.5 text-[13px] rounded-lg transition-all duration-100 whitespace-nowrap active:scale-[0.97] ${
-        active
-          ? "bg-indigo-500/20 text-indigo-300 shadow-sm shadow-indigo-500/10"
-          : "text-slate-400 hover:text-slate-200 hover:bg-white/[0.06]"
-      }`}
-    >
-      {icon}
-      <span className="hidden md:inline">{label}</span>
-    </button>
+    <Tooltip content={label}>
+      <button
+        onClick={onClick}
+        className={`flex items-center gap-1.5 px-2.5 py-1.5 text-[13px] rounded-lg transition-all duration-100 whitespace-nowrap active:scale-[0.97] ${
+          active
+            ? "bg-indigo-500/20 text-indigo-300 shadow-sm shadow-indigo-500/10"
+            : "text-slate-400 hover:text-slate-200 hover:bg-white/[0.06]"
+        }`}
+      >
+        {icon}
+        <span className="hidden md:inline">{label}</span>
+      </button>
+    </Tooltip>
   );
 }

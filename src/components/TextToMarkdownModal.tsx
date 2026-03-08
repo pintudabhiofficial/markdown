@@ -1,33 +1,103 @@
 "use client";
 
 import { useState, useMemo, useCallback } from "react";
-import { X, Copy, Check, ArrowRight, FileCode2 } from "lucide-react";
-import TurndownService from "turndown";
+import { X, Copy, Check, ArrowRight, FileText } from "lucide-react";
 
-interface HtmlToMarkdownModalProps {
+interface TextToMarkdownModalProps {
   onClose: () => void;
   onInsert: (markdown: string) => void;
 }
 
-const turndown = new TurndownService({
-  headingStyle: "atx",
-  codeBlockStyle: "fenced",
-  bulletListMarker: "-",
-});
-
-export function HtmlToMarkdownModal({ onClose, onInsert }: HtmlToMarkdownModalProps) {
-  const [html, setHtml] = useState("");
+export function TextToMarkdownModal({ onClose, onInsert }: TextToMarkdownModalProps) {
+  const [text, setText] = useState("");
   const [copied, setCopied] = useState(false);
 
   const markdown = useMemo(() => {
-    const trimmed = html.trim();
-    if (!trimmed) return "";
-    try {
-      return turndown.turndown(trimmed);
-    } catch {
-      return "";
+    if (!text.trim()) return "";
+    
+    const rawLines = text.split('\n');
+    let isFirstBody = true;
+    let inCodeBlock = false;
+    
+    const formattedLines: { type: string; text: string }[] = [];
+    
+    for (let i = 0; i < rawLines.length; i++) {
+      const originalLine = rawLines[i];
+      const line = originalLine.trim();
+      
+      if (/^`{3}/.test(line)) {
+        inCodeBlock = !inCodeBlock;
+        formattedLines.push({ type: 'raw', text: line });
+        continue;
+      }
+      
+      if (inCodeBlock) {
+        formattedLines.push({ type: 'raw', text: originalLine });
+        continue;
+      }
+
+      if (!line) {
+         continue;
+      }
+
+      if (
+        /^#{1,6}\s/.test(line) || 
+        /^[-*+]\s/.test(line) || 
+        /^\d+\.\s/.test(line) || 
+        /^>/.test(line) || 
+        /^\|.*\|$/.test(line) || 
+        /^[-*_]{3,}$/.test(line) ||
+        /^\*\*.*\*\*$/.test(line) || 
+        /^__.*__$/.test(line) || 
+        /^\*.*\*$/.test(line) || 
+        /^_.*_$/.test(line)
+      ) {
+        formattedLines.push({ type: 'raw', text: line });
+        continue;
+      }
+      
+      const isShort = line.length < 80;
+      const hasHeadingPunctuation = /[.!;]$/.test(line);
+      
+      if (isShort && !hasHeadingPunctuation) {
+        formattedLines.push({ type: 'heading', text: (formattedLines.length === 0 ? `# ${line}` : `## ${line}`) });
+        continue;
+      }
+      
+      if (isFirstBody && line.length >= 80) {
+        isFirstBody = false;
+        formattedLines.push({ type: 'paragraph', text: `**${line}**` });
+        continue;
+      }
+      
+      if (line.length < 200) {
+        formattedLines.push({ type: 'list', text: `* ${line}` });
+      } else {
+        formattedLines.push({ type: 'paragraph', text: line });
+      }
     }
-  }, [html]);
+
+    let result = '';
+    for (let i = 0; i < formattedLines.length; i++) {
+       const curr = formattedLines[i];
+       const prev = i > 0 ? formattedLines[i-1] : null;
+       
+       if (i === 0) {
+         result += curr.text;
+       } else {
+         if (
+           (curr.type === 'list' && prev?.type === 'list') ||
+           (curr.type === 'raw' && prev?.type === 'raw')
+         ) {
+           result += '\n' + curr.text;
+         } else {
+           result += '\n\n' + curr.text;
+         }
+       }
+    }
+    
+    return result;
+  }, [text]);
 
   const handleCopy = useCallback(async () => {
     if (!markdown) return;
@@ -42,6 +112,24 @@ export function HtmlToMarkdownModal({ onClose, onInsert }: HtmlToMarkdownModalPr
     onClose();
   }, [markdown, onInsert, onClose]);
 
+  const processFile = useCallback((file: File) => {
+    if (!file || !file.name.match(/\.txt$/i)) return;
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const result = e.target?.result;
+      if (typeof result === "string") {
+        setText(result);
+      }
+    };
+    reader.readAsText(file);
+  }, []);
+
+  const handleDrop = useCallback((e: React.DragEvent) => {
+    e.preventDefault();
+    const file = e.dataTransfer.files[0];
+    if (file) processFile(file);
+  }, [processFile]);
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
       <div className="relative flex flex-col w-[92vw] max-w-5xl h-[80vh] bg-white dark:bg-[#1e1e1e] rounded-xl shadow-2xl border border-gray-200 dark:border-[#3e3e42] overflow-hidden">
@@ -49,9 +137,9 @@ export function HtmlToMarkdownModal({ onClose, onInsert }: HtmlToMarkdownModalPr
         {/* Header */}
         <div className="flex items-center justify-between px-5 py-3 bg-gray-50 dark:bg-[#252526] border-b border-gray-200 dark:border-[#3e3e42] flex-shrink-0">
           <div className="flex items-center gap-2">
-            <FileCode2 size={18} className="text-blue-500" />
+            <FileText size={18} className="text-gray-500" />
             <span className="font-semibold text-gray-800 dark:text-gray-100 text-sm">
-              HTML → Markdown Converter
+              Text → Markdown Converter
             </span>
           </div>
           <button
@@ -65,15 +153,19 @@ export function HtmlToMarkdownModal({ onClose, onInsert }: HtmlToMarkdownModalPr
 
         {/* Body: two panes */}
         <div className="flex flex-col md:flex-row flex-1 overflow-hidden divide-y md:divide-y-0 md:divide-x divide-gray-200 dark:divide-[#3e3e42]">
-          {/* Left: HTML input */}
-          <div className="flex flex-col w-full md:w-1/2 h-1/2 md:h-full">
-            <div className="px-4 py-2 text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide bg-gray-50 dark:bg-[#252526] border-b border-gray-200 dark:border-[#3e3e42] flex-shrink-0">
-              HTML Input
+          {/* Left: Text input */}
+          <div 
+            className="flex flex-col w-full md:w-1/2 h-1/2 md:h-full"
+            onDragOver={(e) => e.preventDefault()}
+            onDrop={handleDrop}
+          >
+            <div className="px-4 py-2 text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide bg-gray-50 dark:bg-[#252526] border-b border-gray-200 dark:border-[#3e3e42] flex-shrink-0 flex justify-between items-center">
+              <span>Text Input (Paste or Drop .txt file)</span>
             </div>
             <textarea
-              value={html}
-              onChange={(e) => setHtml(e.target.value)}
-              placeholder="Paste your HTML here…"
+              value={text}
+              onChange={(e) => setText(e.target.value)}
+              placeholder="Paste your plain text here, or drag and drop a .txt file..."
               spellCheck={false}
               className="flex-1 w-full p-4 resize-none outline-none bg-transparent text-[#1a1a1a] dark:text-[#d4d4d4] font-mono text-sm leading-[1.6] placeholder:text-gray-400 dark:placeholder:text-gray-600"
             />

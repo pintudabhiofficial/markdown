@@ -113,10 +113,10 @@ export function WordToMarkdownModal({ onClose, onInsert }: WordToMarkdownModalPr
         </div>
 
         {/* Body */}
-        <div className="flex flex-1 overflow-hidden divide-x divide-gray-200 dark:divide-[#3e3e42]">
+        <div className="flex flex-col md:flex-row flex-1 overflow-hidden divide-y md:divide-y-0 md:divide-x divide-gray-200 dark:divide-[#3e3e42]">
 
           {/* Left: upload */}
-          <div className="flex flex-col w-1/2 h-full">
+          <div className="flex flex-col w-full md:w-1/2 h-1/2 md:h-full">
             <div className="px-4 py-2 text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide bg-gray-50 dark:bg-[#252526] border-b border-gray-200 dark:border-[#3e3e42] flex-shrink-0">
               Word Input
             </div>
@@ -152,7 +152,7 @@ export function WordToMarkdownModal({ onClose, onInsert }: WordToMarkdownModalPr
           </div>
 
           {/* Right: output */}
-          <div className="flex flex-col w-1/2 h-full">
+          <div className="flex flex-col w-full md:w-1/2 h-1/2 md:h-full">
             <div className="px-4 py-2 text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide bg-gray-50 dark:bg-[#252526] border-b border-gray-200 dark:border-[#3e3e42] flex-shrink-0">
               Markdown Output
             </div>

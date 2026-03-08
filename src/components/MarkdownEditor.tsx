@@ -7,6 +7,7 @@ import { HtmlPanel } from "./HtmlPanel";
 import { HtmlToMarkdownModal } from "./HtmlToMarkdownModal";
 import { PdfToMarkdownModal } from "./PdfToMarkdownModal";
 import { WordToMarkdownModal } from "./WordToMarkdownModal";
+import { TextToMarkdownModal } from "./TextToMarkdownModal";
 import { Toolbar } from "./Toolbar";
 import { StatusBar } from "./StatusBar";
 import { useLocalStorage } from "../hooks/useLocalStorage";
@@ -28,6 +29,7 @@ export function MarkdownEditor() {
   const [showHtmlToMd, setShowHtmlToMd] = useState(false);
   const [showPdfToMd, setShowPdfToMd] = useState(false);
   const [showWordToMd, setShowWordToMd] = useState(false);
+  const [showTextToMd, setShowTextToMd] = useState(false);
   const [cursorLine, setCursorLine] = useState(1);
   const [cursorCol, setCursorCol] = useState(1);
   const [copiedPreview, setCopiedPreview] = useState(false);
@@ -97,6 +99,7 @@ export function MarkdownEditor() {
         onMarkdownToWord={() => downloadAsWord(markdown)}
         onPdfToMarkdown={() => setShowPdfToMd(true)}
         onWordToMarkdown={() => setShowWordToMd(true)}
+        onTextToMarkdown={() => setShowTextToMd(true)}
         syncScroll={syncScroll}
         onSyncScrollToggle={() => setSyncScroll((p: boolean) => !p)}
       />
@@ -104,6 +107,7 @@ export function MarkdownEditor() {
       {showHtmlToMd && <HtmlToMarkdownModal onClose={() => setShowHtmlToMd(false)} onInsert={(md) => setMarkdown((p: string) => p ? p + "\n\n" + md : md)} />}
       {showPdfToMd && <PdfToMarkdownModal onClose={() => setShowPdfToMd(false)} onInsert={(md) => setMarkdown((p: string) => p ? p + "\n\n" + md : md)} />}
       {showWordToMd && <WordToMarkdownModal onClose={() => setShowWordToMd(false)} onInsert={(md) => setMarkdown((p: string) => p ? p + "\n\n" + md : md)} />}
+      {showTextToMd && <TextToMarkdownModal onClose={() => setShowTextToMd(false)} onInsert={(md) => setMarkdown((p: string) => p ? p + "\n\n" + md : md)} />}
 
       {/* Mobile tabs */}
       {isMobile && (
