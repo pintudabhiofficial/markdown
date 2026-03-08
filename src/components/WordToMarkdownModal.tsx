@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useCallback } from "react";
+import { useState, useRef, useCallback, useEffect } from "react";
 import { X, Copy, Check, Upload, FileInput } from "lucide-react";
 import TurndownService from "turndown";
 
@@ -55,6 +55,35 @@ export function WordToMarkdownModal({ onClose, onInsert }: WordToMarkdownModalPr
     if (file) processFile(file);
   }, [processFile]);
 
+  useEffect(() => {
+    const handleGlobalPaste = (e: ClipboardEvent) => {
+      if (!e.clipboardData) return;
+      
+      // If a file was pasted (like a .docx file from explorer)
+      if (e.clipboardData.files.length > 0) {
+        processFile(e.clipboardData.files[0]);
+        return;
+      }
+
+      // If text/formatted content from Word was pasted
+      const html = e.clipboardData.getData("text/html");
+      if (html) {
+        setFileName("Pasted Word content");
+        setMarkdown(turndown.turndown(html) || "*(Parsed empty content)*");
+        return;
+      }
+
+      const text = e.clipboardData.getData("text/plain");
+      if (text) {
+        setFileName("Pasted plain text");
+        setMarkdown(text);
+      }
+    };
+
+    window.addEventListener("paste", handleGlobalPaste);
+    return () => window.removeEventListener("paste", handleGlobalPaste);
+  }, [processFile]);
+
   const handleCopy = useCallback(async () => {
     if (!markdown) return;
     await navigator.clipboard.writeText(markdown);
@@ -102,7 +131,7 @@ export function WordToMarkdownModal({ onClose, onInsert }: WordToMarkdownModalPr
               >
                 <Upload size={32} className="text-gray-400 group-hover:text-blue-500 transition-colors" />
                 <p className="text-sm text-center text-gray-500 dark:text-gray-400">
-                  {fileName ? <strong>{fileName}</strong> : "Click or drag & drop a Word file (.docx)"}
+                  {fileName ? <strong>{fileName}</strong> : "Click, drag & drop, or paste (Ctrl+V) Word content"}
                 </p>
                 <input
                   ref={inputRef}
@@ -135,8 +164,8 @@ export function WordToMarkdownModal({ onClose, onInsert }: WordToMarkdownModalPr
 
         {/* Footer */}
         <div className="flex items-center justify-end gap-2 px-5 py-3 bg-gray-50 dark:bg-[#252526] border-t border-gray-200 dark:border-[#3e3e42] flex-shrink-0">
-          <button onClick={handleCopy} disabled={!markdown} className="flex items-center gap-1.5 px-3 py-1.5 text-sm rounded hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-300 transition-colors disabled:opacity-40 disabled:cursor-not-allowed">
-            {copied ? <Check size={15} className="text-green-500" /> : <Copy size={15} />}
+          <button onClick={handleCopy} disabled={!markdown} className={`flex items-center gap-1.5 px-3 py-1.5 text-sm font-semibold rounded border shadow-sm transition-all active:scale-[0.97] disabled:opacity-40 disabled:cursor-not-allowed disabled:active:scale-100 disabled:hover:shadow-none ${copied ? "bg-emerald-50 text-emerald-600 border-emerald-200 dark:bg-emerald-500/10 dark:text-emerald-400 dark:border-emerald-500/20" : "bg-indigo-50 hover:bg-indigo-100 text-indigo-600 border-indigo-200 dark:bg-indigo-500/10 dark:hover:bg-indigo-500/20 dark:text-indigo-300 dark:border-indigo-500/30 hover:shadow-md disabled:hover:bg-indigo-50 dark:disabled:hover:bg-indigo-500/10"}`}>
+            {copied ? <Check size={15} /> : <Copy size={15} />}
             {copied ? "Copied!" : "Copy Markdown"}
           </button>
           <button onClick={handleInsert} disabled={!markdown} className="flex items-center gap-1.5 px-4 py-1.5 text-sm rounded bg-blue-500 hover:bg-blue-600 text-white font-medium transition-colors disabled:opacity-40 disabled:cursor-not-allowed">

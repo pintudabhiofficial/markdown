@@ -106,9 +106,13 @@ export function HtmlToMarkdownModal({ onClose, onInsert }: HtmlToMarkdownModalPr
           <button
             onClick={handleCopy}
             disabled={!markdown}
-            className="flex items-center gap-1.5 px-3 py-1.5 text-sm rounded hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-300 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+            className={`flex items-center gap-1.5 px-3 py-1.5 text-sm font-semibold rounded border shadow-sm transition-all active:scale-[0.97] disabled:opacity-40 disabled:cursor-not-allowed disabled:active:scale-100 disabled:hover:shadow-none ${
+              copied
+                ? "bg-emerald-50 text-emerald-600 border-emerald-200 dark:bg-emerald-500/10 dark:text-emerald-400 dark:border-emerald-500/20"
+                : "bg-indigo-50 hover:bg-indigo-100 text-indigo-600 border-indigo-200 dark:bg-indigo-500/10 dark:hover:bg-indigo-500/20 dark:text-indigo-300 dark:border-indigo-500/30 hover:shadow-md disabled:hover:bg-indigo-50 dark:disabled:hover:bg-indigo-500/10"
+            }`}
           >
-            {copied ? <Check size={15} className="text-green-500" /> : <Copy size={15} />}
+            {copied ? <Check size={15} /> : <Copy size={15} />}
             {copied ? "Copied!" : "Copy Markdown"}
           </button>
           <button

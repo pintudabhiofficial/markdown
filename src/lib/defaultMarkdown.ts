@@ -88,7 +88,7 @@ Use \`console.log('Hello World')\` to print to the console.
 \`\`\`javascript
 function greet(name) {
   console.log(\`Hello, \${name}!\`);
-  return \`Welcome to Markdown Live Preview\`;
+  return \`Welcome to Markdown Preview Live\`;
 }
 
 greet('Developer');
@@ -110,7 +110,7 @@ print(fibonacci(10))
     <title>Hello</title>
   </head>
   <body>
-    <h1>Markdown Live Preview</h1>
+    <h1>Markdown Preview Live</h1>
   </body>
 </html>
 \`\`\`

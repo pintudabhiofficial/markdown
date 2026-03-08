@@ -15,7 +15,7 @@ import { useDebounce } from "../hooks/useDebounce";
 import { defaultMarkdown } from "../lib/defaultMarkdown";
 import { exportToPdf } from "../lib/exportPdf";
 import { downloadAsWord } from "../lib/markdownToWord";
-import { Eye, Code2 } from "lucide-react";
+import { Eye, Code2, Copy, Check } from "lucide-react";
 
 export function MarkdownEditor() {
   const [markdown, setMarkdown] = useLocalStorage<string>("markdown-content", defaultMarkdown);
@@ -30,6 +30,7 @@ export function MarkdownEditor() {
   const [showWordToMd, setShowWordToMd] = useState(false);
   const [cursorLine, setCursorLine] = useState(1);
   const [cursorCol, setCursorCol] = useState(1);
+  const [copiedPreview, setCopiedPreview] = useState(false);
 
   const editorRef = useRef<HTMLTextAreaElement>(null!);
   const previewRef = useRef<HTMLDivElement>(null!);
@@ -61,6 +62,22 @@ export function MarkdownEditor() {
   }, [isDragging]);
 
   const handleCursorChange = useCallback((l: number, c: number) => { setCursorLine(l); setCursorCol(c); }, []);
+
+  const handleCopyPreview = useCallback(() => {
+    if (!previewRef.current) return;
+    const range = document.createRange();
+    range.selectNode(previewRef.current);
+    window.getSelection()?.removeAllRanges();
+    window.getSelection()?.addRange(range);
+    try {
+      document.execCommand("copy");
+      setCopiedPreview(true);
+      setTimeout(() => setCopiedPreview(false), 2000);
+    } catch (err) {
+      console.error("Failed to copy preview", err);
+    }
+    window.getSelection()?.removeAllRanges();
+  }, []);
 
   /* ── Right-panel tab button ── */
   const tab = (active: boolean) =>
@@ -109,9 +126,24 @@ export function MarkdownEditor() {
               <EditorPanel value={markdown} onChange={setMarkdown} editorRef={editorRef} onScroll={handleEditorScroll} onCursorChange={handleCursorChange} />
             </div>
             <div className={`w-full h-full flex flex-col ${activeTab === "preview" ? "flex" : "hidden"}`}>
-              <div className="flex border-b border-slate-200 dark:border-white/[0.06] bg-white dark:bg-[#0f1117] flex-shrink-0">
-                <button onClick={() => setRightPanelMode("preview")} className={tab(rightPanelMode === "preview")}><Eye size={12} />Preview</button>
-                <button onClick={() => setRightPanelMode("html")} className={tab(rightPanelMode === "html")}><Code2 size={12} />HTML</button>
+              <div className="flex items-center justify-between border-b border-slate-200 dark:border-white/[0.06] bg-white dark:bg-[#0f1117] flex-shrink-0">
+                <div className="flex">
+                  <button onClick={() => setRightPanelMode("preview")} className={tab(rightPanelMode === "preview")}><Eye size={12} />Preview</button>
+                  <button onClick={() => setRightPanelMode("html")} className={tab(rightPanelMode === "html")}><Code2 size={12} />HTML</button>
+                </div>
+                {rightPanelMode === "preview" && (
+                  <button
+                    onClick={handleCopyPreview}
+                    className={`flex items-center gap-1.5 px-3 py-1.5 mr-2 text-[11px] font-bold uppercase tracking-wider rounded border shadow-sm transition-all active:scale-[0.97] ${
+                      copiedPreview
+                        ? "bg-emerald-50 text-emerald-600 border-emerald-200 dark:bg-emerald-500/10 dark:text-emerald-400 dark:border-emerald-500/20"
+                        : "bg-indigo-50 hover:bg-indigo-100 text-indigo-600 border-indigo-200 dark:bg-indigo-500/10 dark:hover:bg-indigo-500/20 dark:text-indigo-300 dark:border-indigo-500/30 hover:shadow-md"
+                    }`}
+                  >
+                    {copiedPreview ? <Check size={12} /> : <Copy size={12} />}
+                    {copiedPreview ? "Copied" : "Copy"}
+                  </button>
+                )}
               </div>
               <div className="flex-1 overflow-hidden">
                 {rightPanelMode === "preview"
@@ -146,9 +178,24 @@ export function MarkdownEditor() {
 
             {/* Right panel */}
             <div style={{ width: `${100 - dividerPos}%` }} className="h-full overflow-hidden flex flex-col">
-              <div className="flex border-b border-slate-200 dark:border-white/[0.06] bg-white dark:bg-[#0f1117] flex-shrink-0">
-                <button onClick={() => setRightPanelMode("preview")} className={tab(rightPanelMode === "preview")}><Eye size={12} />Preview</button>
-                <button onClick={() => setRightPanelMode("html")} className={tab(rightPanelMode === "html")}><Code2 size={12} />HTML</button>
+              <div className="flex items-center justify-between border-b border-slate-200 dark:border-white/[0.06] bg-white dark:bg-[#0f1117] flex-shrink-0">
+                <div className="flex">
+                  <button onClick={() => setRightPanelMode("preview")} className={tab(rightPanelMode === "preview")}><Eye size={12} />Preview</button>
+                  <button onClick={() => setRightPanelMode("html")} className={tab(rightPanelMode === "html")}><Code2 size={12} />HTML</button>
+                </div>
+                {rightPanelMode === "preview" && (
+                  <button
+                    onClick={handleCopyPreview}
+                    className={`flex items-center gap-1.5 px-3 py-1.5 mr-2 text-[11px] font-bold uppercase tracking-wider rounded border shadow-sm transition-all active:scale-[0.97] ${
+                      copiedPreview
+                        ? "bg-emerald-50 text-emerald-600 border-emerald-200 dark:bg-emerald-500/10 dark:text-emerald-400 dark:border-emerald-500/20"
+                        : "bg-indigo-50 hover:bg-indigo-100 text-indigo-600 border-indigo-200 dark:bg-indigo-500/10 dark:hover:bg-indigo-500/20 dark:text-indigo-300 dark:border-indigo-500/30 hover:shadow-md"
+                    }`}
+                  >
+                    {copiedPreview ? <Check size={12} /> : <Copy size={12} />}
+                    {copiedPreview ? "Copied" : "Copy"}
+                  </button>
+                )}
               </div>
               <div className="flex-1 overflow-hidden">
                 {rightPanelMode === "preview"

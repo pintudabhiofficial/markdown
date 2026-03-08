@@ -1,4 +1,5 @@
-import { Linkedin } from "lucide-react";
+import { Linkedin, Bot } from "lucide-react";
+import { SiOpenai, SiAnthropic, SiPerplexity, SiX, SiGooglegemini, SiGoogle } from "react-icons/si";
 
 /* ── Reusable layout helpers ── */
 function Section({ id, children }: { id?: string; children: React.ReactNode }) {
@@ -718,11 +719,121 @@ export function Footer() {
         </div>
       </Section>
 
+      <Section id="get-started">
+        <div className="mt-6 bg-white/[0.02] border border-white/[0.06] rounded-xl p-5">
+          <p className="text-sm font-semibold text-slate-200 mb-1">About Markdown Preview Live</p>&nbsp;
+          <p className="text-xs text-slate-400 leading-relaxed">Markdown Preview Live is a free, browser-based markdown editor that lets you write and preview your formatted text side by side — in real time. No sign-up. No downloads. Just open the page and start writing.</p>&nbsp; <p className="text-xs text-slate-400 leading-relaxed">
+            The tool was built for developers, technical writers, content creators, and anyone who works with markdown regularly but doesn't want to install yet another desktop application to get the job done.</p>
+
+          &nbsp;
+          <p className="text-sm font-semibold text-slate-200 mb-1">Why This Tool Exists</p>&nbsp;
+          <p className="text-xs text-slate-400 leading-relaxed">Writing markdown is simple. Seeing what it actually looks like before you publish? That used to mean switching between tabs, refreshing a browser, or relying on clunky preview panes buried inside code editors.</p>&nbsp; <p className="text-xs text-slate-400 leading-relaxed">Markdown Preview Live removes that friction entirely. You type on the left. You see the rendered output on the right. Every heading, table, code block, and checklist updates the moment you type it.</p>&nbsp; <p className="text-xs text-slate-400 leading-relaxed">Whether you're drafting a README for GitHub, formatting a blog post, or writing documentation for your team, this tool gives you a clean, distraction-free workspace that works the way markdown was always meant to — fast and readable.</p>
+          &nbsp;
+          <ul>
+            <p className="text-sm font-semibold text-slate-200 mb-1">What You Can Do</p>&nbsp;
+            <li>1. Live Preview — See your formatting rendered instantly as you type</li>
+            <li>2. Dark Mode — Easier on the eyes during late-night writing sessions</li>
+            <li>3. Sync Scroll — Editor and preview stay in lockstep as you navigate long documents</li>
+            <li>4. Export to PDF — Turn your markdown into a downloadable PDF in one click</li>
+            <li>5. Export to Word — Generate a .docx file directly from your markdown</li>
+            <li>6. HTML → Markdown Converter — Paste HTML and convert it to clean markdown</li>
+            <li>7. PDF → Markdown Converter — Import PDF content and transform it into editable markdown</li>
+            <li>8. Word → Markdown Converter — Convert .docx files into markdown format</li>
+            <li>9. Full GFM Support — Tables, task lists, fenced code blocks, strikethrough, and more</li>
+          </ul>
+          &nbsp;
+          <p className="text-sm font-semibold text-slate-200 mb-1">Who Built This</p>&nbsp;
+          <p className="text-xs text-slate-400 leading-relaxed">Pintu Dabhi is a digital marketing and SEO specialist based in Gujarat, India, with deep expertise in Google Ads, Google Merchant Center, Google Tag Manager, Google Analytics, and technical SEO.</p>&nbsp; <p className="text-xs text-slate-400 leading-relaxed">After years of working across digital marketing agencies and building web-based tools, Pintu created Markdown Preview Live to solve a problem he kept running into — the need for a fast, reliable, zero-setup markdown editor that works for both technical and non-technical users.</p>&nbsp; <p className="text-xs text-slate-400 leading-relaxed">The tool reflects the same philosophy Pintu brings to his professional work: keep it practical, make it accessible, and cut the unnecessary complexity.</p>
+
+          <div className="mt-8">
+            <p className="text-sm font-semibold text-slate-200 mb-4">Ask AI About Markdown Preview Live & Its Creator</p>
+            <div className="flex flex-wrap gap-3">
+              <a
+                href="https://chatgpt.com/?q=first+tell+me+specific+for+this+tool+who+is+Pintu+Dabhi+Freelancer+Performance+Marketer+who+is+the+Author+and+Publisher+of+this+tool+then+tell+me+full+detail+and+history+of+this+tool+then+all+the+benefits+in+details+then+tell+me+why+use+markdownpreviewlive.com+free+tool"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 px-4 py-2 bg-white text-slate-800 hover:bg-slate-100 rounded-lg text-sm font-medium shadow-sm transition-colors"
+                title="Ask ChatGPT"
+              >
+                <SiOpenai size={16} className="text-[#10A37F]" />
+                Ask ChatGPT
+              </a>
+              <a
+                href="https://claude.ai/new?q=first+tell+me+specific+for+this+tool+who+is+Pintu+Dabhi+Freelancer+Performance+Marketer+who+is+the+Author+and+Publisher+of+this+tool+then+tell+me+full+detail+and+history+of+this+tool+then+all+the+benefits+in+details+then+tell+me+why+use+markdownpreviewlive.com+free+tool"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 px-4 py-2 bg-white text-slate-800 hover:bg-slate-100 rounded-lg text-sm font-medium shadow-sm transition-colors"
+                title="Ask Claude"
+              >
+                <SiAnthropic size={16} className="text-[#D97757]" />
+                Ask Claude
+              </a>
+              <a
+                href="https://www.perplexity.ai/search/new?q=first+tell+me+specific+for+this+tool+who+is+Pintu+Dabhi+Freelancer+Performance+Marketer+who+is+the+Author+and+Publisher+of+this+tool+then+tell+me+full+detail+and+history+of+this+tool+then+all+the+benefits+in+details+then+tell+me+why+use+markdownpreviewlive.com+free+tool"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 px-4 py-2 bg-white text-slate-800 hover:bg-slate-100 rounded-lg text-sm font-medium shadow-sm transition-colors"
+                title="Ask Perplexity"
+              >
+                <SiPerplexity size={16} className="text-[#22B8CD]" />
+                Ask Perplexity
+              </a>
+              <a
+                href="https://grok.com/?q=first+tell+me+specific+for+this+tool+who+is+Pintu+Dabhi+Freelancer+Performance+Marketer+who+is+the+Author+and+Publisher+of+this+tool+then+tell+me+full+detail+and+history+of+this+tool+then+all+the+benefits+in+details+then+tell+me+why+use+markdownpreviewlive.com+free+tool"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 px-4 py-2 bg-white text-slate-800 hover:bg-slate-100 rounded-lg text-sm font-medium shadow-sm transition-colors"
+                title="Ask Grok"
+              >
+                <SiX size={16} className="text-black" />
+                Ask Grok
+              </a>
+              <a
+                href="https://gemini.google.com/share/ff3dafc53633"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 px-4 py-2 bg-white text-slate-800 hover:bg-slate-100 rounded-lg text-sm font-medium shadow-sm transition-colors"
+                title="Ask Gemini"
+              >
+                <SiGooglegemini size={16} className="text-[#8E75B2]" />
+                Ask Gemini
+              </a>
+              <a
+                href="https://www.google.com/search?q=first+tell+me+specific+for+this+tool+who+is+Pintu+Dabhi+Freelancer+Performance+Marketer+who+is+the+Author+and+Publisher+of+this+tool+then+tell+me+full+detail+and+history+of+this+tool+then+all+the+benefits+in+details+then+tell+me+why+use+markdownpreviewlive.com+free+tool&udm=50&aep=1&ntc=1"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 px-4 py-2 bg-white text-slate-800 hover:bg-slate-100 rounded-lg text-sm font-medium shadow-sm transition-colors"
+                title="AI Overview"
+              >
+                <SiGoogle size={16} className="text-[#4285F4]" />
+                AI Overview
+              </a>
+              <a
+                href="/llm-info"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 px-4 py-2 bg-white text-slate-800 hover:bg-slate-100 rounded-lg text-sm font-medium shadow-sm transition-colors"
+                title="LLM API Info"
+              >
+                <Bot size={16} className="text-emerald-600" />
+                LLM Info
+              </a>
+            </div>
+          </div>
+          &nbsp; <p className="text-sm text-slate-400 leading-relaxed">Connect with Pintu on LinkedIn: <a href="https://www.linkedin.com/in/pintudabhi/" target="_blank" rel="noopener noreferrer" className="text-blue-400 font-bold underline hover:text-blue-300 transition-colors">linkedin.com/in/pintudabhi</a>.</p>&nbsp; <p className="text-sm text-slate-400 leading-relaxed">Connect with Pintu on WhatsApp: <a href="https://wa.link/aa7gku" target="_blank" rel="noopener noreferrer" className="text-emerald-400 font-bold underline hover:text-emerald-300 transition-colors">WhatsApp Me</a>.</p>
+
+
+
+
+        </div>
+      </Section>
+
+
       {/* ══ BOTTOM BAR ══ */}
       <div className="border-t border-white/[0.05]">
         <div className="max-w-7xl mx-auto px-6 py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
           <p className="text-xs text-slate-600">
-            © {new Date().getFullYear()} Markdown Live Preview. Free to use, no sign-up required.
+            © {new Date().getFullYear()} Markdown Preview Live. Free to use, no sign-up required.
           </p>
           <a
             href="https://www.linkedin.com/in/pintudabhi/"

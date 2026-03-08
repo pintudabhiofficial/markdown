@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@icons-pack/react-simple-icons": "^13.11.1",
     "html2pdf.js": "^0.14.0",
     "lucide-react": "^0.575.0",
     "mammoth": "^1.11.0",
@@ -17,6 +18,7 @@
     "pdfjs-dist": "^5.5.207",
     "react": "^19",
     "react-dom": "^19",
+    "react-icons": "^5.6.0",
     "react-markdown": "^10.1.0",
     "react-syntax-highlighter": "^16.1.1",
     "rehype-raw": "^7.0.0",
