@@ -26,6 +26,10 @@ export const metadata: Metadata = {
     "markdown to html",
     "gfm editor",
   ],
+  metadataBase: new URL("https://markdownpreviewlive.com/"),
+  alternates: {
+    canonical: "/",
+  },
 };
 
 export default function RootLayout({
@@ -40,7 +44,6 @@ export default function RootLayout({
         <script dangerouslySetInnerHTML={{ __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-TZDS82LL');` }} />
         <meta name="robots" content="INDEX,FOLLOW" />
         <meta name="google-site-verification" content="PYgIke_rOI8fOGZuksFShJsiR_wcEGZo5qnR3doAFH8" />
-        <link rel="canonical" href="https://markdownpreviewlive.com/" />
         <link rel="author" href="https://www.linkedin.com/in/pintudabhi/" />
         <link rel="publisher" href="https://www.linkedin.com/in/pintudabhi/" />
         <meta name="author" content="Pintu Dabhi" />

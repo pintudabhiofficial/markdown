@@ -3,6 +3,9 @@ import React from "react";
 export const metadata = {
   title: "LLM Info - Markdown Preview Live",
   description: "Information about LLMs and Markdown Preview Live.",
+  alternates: {
+    canonical: "/llm-info",
+  },
 };
 
 export default function LlmInfoPage() {
